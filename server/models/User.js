@@ -9,7 +9,10 @@ const UserSchema = new Schema(
       lowercase: true,
       unique: true,
       required: [true, "can't be blank"],
-      match: [/^[a-zA-Z0-9]+$/, "is invalid"],
+      match: [
+        /^[a-z0-9!@#$%_]+$/,
+        "can contain lowercase letters, digits or !,@,#,$,%,_ only.",
+      ],
       index: true,
       unique: true,
     },
@@ -27,7 +30,10 @@ const UserSchema = new Schema(
       type: String,
       lowercase: true,
       required: [true, "can't be blank"],
-      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "is invalid"],
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "is not a valid email address.",
+      ],
       index: true,
       required: true,
       unique: true,
