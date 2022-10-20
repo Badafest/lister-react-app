@@ -12,7 +12,8 @@ import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 //private pages
-import Todos from "./pages/private/Todos";
+import Lists from "./pages/private/Lists";
+import List from "./pages/private/List";
 
 import {
   BrowserRouter as Router,
@@ -37,7 +38,8 @@ export default function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/password-reset" element={<ResetPassword />}></Route>
-            <Route path="/app" element={<Todos />}></Route>
+            <Route path="/app" element={<Lists />}></Route>
+            <Route path="/list/:_id" element={<List />}></Route>
             {/* <Route path="/topics" element={<Topics />}>
             <Route path={`:topicId`} element={<Topic />}></Route>
             <Route

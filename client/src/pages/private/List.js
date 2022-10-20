@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/User";
+import List from "../../components/List";
 
 import axios from "../../helpers/axios";
 
 export default () => {
   const navigate = useNavigate();
   const user = useContext(UserContext).userData;
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
 
   useEffect(() => {
     if (!user || !user.username || !user._id || !user.token) {
@@ -26,9 +27,8 @@ export default () => {
   }, [user._id]);
 
   return (
-    <div className="container col-md-8 offset-md-2">
-      <h1>LISTS OF {user && user.username}</h1>
-      <pre>{JSON.stringify(data)}</pre>
+    <div className="container col-md-6 offset-md-3">
+      <List preview={false} />
     </div>
   );
 };
