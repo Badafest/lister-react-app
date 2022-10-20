@@ -24,7 +24,7 @@ export default () => {
   return (
     <div className="container d-flex flex-column justify-content-center my-2">
       <center>
-        <h3>SIGN UP</h3>
+        <h3>RESET PASSWORD</h3>
       </center>
       <UserForm
         login={false}
@@ -62,13 +62,13 @@ export default () => {
           //send data to backend, and on successful signup navigate to login
 
           axios
-            .post("/user/create", {
+            .post("/user/reset-password", {
               username,
               password,
               email,
             })
             .then((res) => {
-              console.log(`${username} is signed up!`);
+              console.log(`${username}'s password is reset!`);
 
               //navigate to login
               navigate("/login");
@@ -90,7 +90,7 @@ export default () => {
       />
       {toastMessage.length ? (
         <Toast
-          title={"Oops! Couldn't sign you up"}
+          title={"Oops! Couldn't reset your password"}
           message={toastMessage}
           setMessage={setToastMessage}
         />

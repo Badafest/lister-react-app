@@ -3,10 +3,18 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
 const fs = require("fs");
+const cors = require("cors");
 
 const app = express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
+
+//cors
+app.use(
+  cors({
+    origin: process.env.CLIENT_LOCAL_URL,
+  })
+);
 
 //db connection
 mongoose

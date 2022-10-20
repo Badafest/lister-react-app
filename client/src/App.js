@@ -1,10 +1,14 @@
 import React from "react";
+
 import Nav from "./components/Nav";
+
+import { UserContextProvider } from "./context/User";
 
 //public pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 //private pages
@@ -19,18 +23,22 @@ import {
   // Outlet,
 } from "react-router-dom";
 
+//env
+require("dotenv").config();
+
 export default function App() {
   return (
-    <Router>
-      <div>
-        <Nav />
-
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/app" element={<Todos />}></Route>
-          {/* <Route path="/topics" element={<Topics />}>
+    <UserContextProvider>
+      <Router>
+        <div>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/password-reset" element={<ResetPassword />}></Route>
+            <Route path="/app" element={<Todos />}></Route>
+            {/* <Route path="/topics" element={<Topics />}>
             <Route path={`:topicId`} element={<Topic />}></Route>
             <Route
               index
@@ -38,10 +46,11 @@ export default function App() {
               element={<h3>Please select a topic.</h3>}
             ></Route>
           </Route> */}
-          <Route path="*" index element={<NotFound />}></Route>
-        </Routes>
-      </div>
-    </Router>
+            <Route path="*" index element={<NotFound />}></Route>
+          </Routes>
+        </div>
+      </Router>
+    </UserContextProvider>
   );
 }
 
