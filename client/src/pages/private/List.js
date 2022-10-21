@@ -27,8 +27,8 @@ export default () => {
   }, [user._id]);
 
   return (
-    <div className="container col-md-6 offset-md-3">
-      <List preview={false} />
+    <div className="container col-md-6 offset-md-3 p-3">
+      <List preview={false} editable={true} />
     </div>
   );
 };

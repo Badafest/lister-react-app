@@ -30,8 +30,20 @@ export default () => {
     <div className="container">
       <h1>LISTS OF {user && user.username}</h1>
       <pre>{JSON.stringify(data)}</pre>
-      <div className=" d-flex justify-content-between flex-wrap">
-        <div className="p-1 col-md-4">
+      <div className=" d-flex flex-wrap">
+        <div className="p-3 col-md-4">
+          <List />
+        </div>
+        <div className="p-3 col-md-4">
+          <List />
+        </div>
+        <div className="p-3 col-md-4">
+          <List />
+        </div>
+        <div className="p-3 col-md-4">
+          <List />
+        </div>
+        <div className="p-3 col-md-4">
           <List />
         </div>
       </div>
