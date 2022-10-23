@@ -36,7 +36,6 @@ export default () => {
             setValidated(true);
             setDisableSubmit(false);
             return 0;
-          } else {
           }
 
           const password = formData.get("password");

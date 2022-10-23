@@ -38,20 +38,6 @@ const UserSchema = new Schema(
       required: true,
       unique: true,
     },
-    profile: {
-      firstName: String,
-      lastName: String,
-      avatar: String,
-      bio: String,
-      address: {
-        street1: String,
-        street2: String,
-        city: String,
-        state: String,
-        country: String,
-        zip: String,
-      },
-    },
     active: { type: Boolean, default: true },
   },
   {

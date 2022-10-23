@@ -57,26 +57,30 @@ export default (props) => {
         Shared <span className="fw-bold">{list.shares}</span> times
       </div>
       <div className="d-flex justify-content-between p-1 fw-light">
-        <div>🖋 {list.author}</div>
+        <div>🖋 {list.author.username || list.author}</div>
         <div>
           <span>updated {moment(list.updatedAt).fromNow()}</span>
           <span>{list.isPublic ? "🌎" : "🔒"}</span>
         </div>
       </div>
-      <ol className="list-group list-group-numbered">
-        {preview ? (
-          <ListItem item={list.items[0]} editable={editable} key="0" />
-        ) : (
-          list.items.map((item, index) => (
-            <ListItem
-              item={item}
-              initialCollapse={false}
-              editable={editable}
-              key={index}
-            />
-          ))
-        )}
-      </ol>
+      {list.items.length ? (
+        <ol className="list-group list-group-numbered">
+          {preview ? (
+            <ListItem item={list.items[0]} editable={editable} key="0" />
+          ) : (
+            list.items.map((item, index) => (
+              <ListItem
+                item={item}
+                initialCollapse={false}
+                editable={editable}
+                key={index}
+              />
+            ))
+          )}
+        </ol>
+      ) : (
+        <></>
+      )}
       {preview ? (
         <Link
           to={`/list/${list._id}`}
@@ -84,23 +88,27 @@ export default (props) => {
         >
           See more...
         </Link>
-      ) : editable ? (
+      ) : (
         <div className="d-flex justify-content-between m-2 p-2 rounded border border-gray-700">
           <div>
             <span className="btn btn-sm btn-success m-1">Share List</span>
           </div>
-          <div>
-            <span className="btn btn-sm btn-outline-primary m-1">Add Item</span>
-            <span className="btn btn-sm btn-outline-success m-1">
-              Edit List
-            </span>
-            <span className="btn btn-sm btn-outline-danger m-1">
-              Delete List
-            </span>
-          </div>
+          {editable ? (
+            <div>
+              <span className="btn btn-sm btn-outline-primary m-1">
+                Add Item
+              </span>
+              <span className="btn btn-sm btn-outline-success m-1">
+                Edit List
+              </span>
+              <span className="btn btn-sm btn-outline-danger m-1">
+                Delete List
+              </span>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
-      ) : (
-        <></>
       )}
     </div>
   );
