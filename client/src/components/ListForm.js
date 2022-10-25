@@ -1,7 +1,6 @@
 import React from "react";
 export default (props) => {
   const {
-    isNew = true,
     handleSubmit = () => {
       console.log(
         "Submit button was pressed but handler function was not passed as prop"
@@ -15,6 +14,8 @@ export default (props) => {
       );
     },
     validInputs = { title: true },
+    defaultTitle = "Untitled",
+    defaultIsPublic = true,
   } = props;
 
   return (
@@ -36,6 +37,7 @@ export default (props) => {
             onFocus={() => {
               setValidated(false);
             }}
+            defaultValue={defaultTitle}
             required
           />
           <div id="titleHelp" className="form-text">
@@ -50,6 +52,7 @@ export default (props) => {
             name="isPublic"
             className="form-check-input"
             id="isPublic"
+            defaultChecked={defaultIsPublic}
           />
           <label className="form-check-label" htmlFor="isPublic">
             Make your list Public ?
@@ -66,7 +69,7 @@ export default (props) => {
             className="btn btn-primary w-50"
             disabled={disableSubmit}
           >
-            Create List
+            Submit
           </button>
         </div>
       </form>

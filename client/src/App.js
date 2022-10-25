@@ -11,10 +11,15 @@ import Signup from "./pages/Signup";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
-//private pages
+//private pages: lists
 import Lists from "./pages/private/Lists";
 import List from "./pages/private/List";
 import Create from "./pages/private/Create";
+import Edit from "./pages/private/Edit";
+
+//private pages: items
+import AddItem from "./pages/private/AddItem";
+import EditItem from "./pages/private/EditItem";
 
 import {
   BrowserRouter as Router,
@@ -42,6 +47,9 @@ export default function App() {
             <Route path="/app" element={<Lists />}></Route>
             <Route path="/list/:_id" element={<List />}></Route>
             <Route path="/list/new" element={<Create />}></Route>
+            <Route path="/list/edit/:_data" element={<Edit />}></Route>
+            <Route path="/list/add/:_id" element={<AddItem />}></Route>
+            <Route path="/list/edit-item/:_id" element={<EditItem />}></Route>
             {/* <Route path="/topics" element={<Topics />}>
             <Route path={`:topicId`} element={<Topic />}></Route>
             <Route

@@ -21,10 +21,7 @@ const ListSchema = new Schema(
       required: [true, "can't be blank"],
       default: false,
     },
-    shares: {
-      type: Number,
-      default: 0,
-    },
+    likes: [mongoose.ObjectId],
     items: [
       {
         title: {
@@ -33,7 +30,7 @@ const ListSchema = new Schema(
           default: "Untitled List",
         },
         description: String,
-        image: String,
+        image: { url: String, public_id: String },
         image_caption: String,
         crossed: {
           type: Boolean,

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import ListForm from "../../components/ListForm";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import ItemForm from "../../components/ItemForm";
 import Toast from "../../components/Toast";
 import axios from "../../helpers/axios";
 import { UserContext } from "../../context/User";
@@ -13,6 +14,8 @@ export default () => {
 
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+
   const userData = useContext(UserContext).userData;
 
   useEffect(() => {
@@ -21,9 +24,14 @@ export default () => {
     }
   }, [userData._id]);
 
+  const { _id } = useParams();
+  const [item, title, description, image, caption] = Array.from(
+    searchParams.values()
+  ).map((value) => (value === "undefined" ? "" : value));
+
   return (
     <div className="container d-flex flex-column justify-content-center my-2">
-      <ListForm
+      <ItemForm
         handleSubmit={async (event) => {
           event.preventDefault();
           setDisableSubmit(true);
@@ -39,20 +47,29 @@ export default () => {
             return 0;
           }
 
-          //send data to backend, and on successful login store user data as context and on local storage
-          const isPublic =
-            formData.get("isPublic") != null &&
-            formData.get("isPublic") === "on";
+          const data = { title };
 
-          const author = userData._id;
+          const description = formData.get("description");
+          if (description.length) {
+            data.description = description;
+          }
+
+          const image = event.target.querySelector("#userImage");
+          const image_caption = formData.get("caption");
+          if (image && image.src.length) {
+            data.image = image.src;
+            if (image_caption.length) {
+              data.image_caption = image_caption;
+            }
+          }
+          console.log(data);
 
           axios
-            .post("/list/create", { title, isPublic, author })
+            .patch("/list/edit-item/" + _id + "?item=" + item, data)
             .then((res) => {
-              console.log("Created a list");
-
+              console.log("Edited item");
               //navigate to app
-              navigate("/list/" + res.data.data._id);
+              navigate("/list/" + _id);
             })
             .catch((err) => {
               setDisableSubmit(false);
@@ -69,7 +86,18 @@ export default () => {
         validated={validated}
         setValidated={setValidated}
         validInputs={validInputs}
+        defaultTitle={title}
+        defaultDescription={description}
+        defaultImage={image}
+        defaultImageCaption={caption}
       />
+      <div className="container d-flex justify-content-center p-2">
+        <Link to={"/list/" + _id}>
+          <button type="button" className="btn btn-secondary">
+            Cancel
+          </button>
+        </Link>
+      </div>
       {toastMessage.length ? (
         <Toast
           title={"Oops! Couldn't create your list"}

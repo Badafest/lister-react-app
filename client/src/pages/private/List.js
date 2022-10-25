@@ -27,6 +27,7 @@ export default () => {
           preview={false}
           editable={data.author._id === user._id}
           list={data}
+          user_id={user._id}
         />
       )}
     </div>

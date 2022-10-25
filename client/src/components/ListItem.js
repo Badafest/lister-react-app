@@ -1,7 +1,15 @@
+import axios from "../helpers/axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default (props) => {
-  const { item, initialCollapse = true, editable = false } = props;
+  const {
+    item,
+    item_index = 0,
+    list_id = null,
+    initialCollapse = true,
+    editable = false,
+  } = props;
   const [showDetails, setShowDetails] = useState(initialCollapse);
   const [crossed, setCrossed] = useState(item.crossed);
 
@@ -40,7 +48,7 @@ export default (props) => {
                   <div className="d-flex justify-content-center">
                     <div className="col-md-6 mt-1">
                       <img
-                        src={item.image}
+                        src={item.image.url || item.image}
                         className="img-fluid img-thumbnail"
                         alt={item.imageCaption}
                       ></img>
@@ -60,13 +68,67 @@ export default (props) => {
                   <button
                     className="btn btn-sm btn-success m-1"
                     onClick={() => {
-                      setCrossed(!crossed);
+                      axios
+                        .patch(
+                          "/list/cross/" +
+                            list_id +
+                            "?item=" +
+                            item_index +
+                            "&cross=" +
+                            !crossed
+                        )
+                        .then((res) => {
+                          console.log("Crossed item");
+                          setCrossed(!crossed);
+                        });
                     }}
                   >
                     {crossed ? "Uncross" : "Cross"}
                   </button>
-                  <button className="btn btn-sm btn-primary m-1">Edit</button>
-                  <button className="btn btn-sm btn-danger m-1">Delete</button>
+
+                  <Link
+                    to={
+                      "/list/edit-item/" +
+                      list_id +
+                      "?item=" +
+                      item_index +
+                      "&title=" +
+                      item.title +
+                      "&description=" +
+                      item.description +
+                      "&image=" +
+                      (item.image && item.image.url) +
+                      "&caption=" +
+                      item.caption
+                    }
+                  >
+                    <button className="btn btn-sm btn-primary m-1">Edit</button>
+                  </Link>
+
+                  <button
+                    className="btn btn-sm btn-danger m-1"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure? Deleted items cannot be recovered."
+                        )
+                      ) {
+                        axios
+                          .delete(
+                            "/list/delete-item/" +
+                              list_id +
+                              "?item=" +
+                              item_index
+                          )
+                          .then((res) => {
+                            console.log("Deleted item");
+                            window.location.reload();
+                          });
+                      }
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               ) : (
                 <></>

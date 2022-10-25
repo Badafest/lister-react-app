@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import ListForm from "../../components/ListForm";
+import { useNavigate, useParams } from "react-router-dom";
+import ItemForm from "../../components/ItemForm";
 import Toast from "../../components/Toast";
 import axios from "../../helpers/axios";
 import { UserContext } from "../../context/User";
@@ -21,9 +21,10 @@ export default () => {
     }
   }, [userData._id]);
 
+  const list_id = useParams()._id;
   return (
     <div className="container d-flex flex-column justify-content-center my-2">
-      <ListForm
+      <ItemForm
         handleSubmit={async (event) => {
           event.preventDefault();
           setDisableSubmit(true);
@@ -39,20 +40,29 @@ export default () => {
             return 0;
           }
 
-          //send data to backend, and on successful login store user data as context and on local storage
-          const isPublic =
-            formData.get("isPublic") != null &&
-            formData.get("isPublic") === "on";
+          const data = { title };
 
-          const author = userData._id;
+          const description = formData.get("description");
+          if (description.length) {
+            data.description = description;
+          }
+
+          const image = event.target.querySelector("#userImage");
+          const image_caption = formData.get("caption");
+          if (image && image.src.length) {
+            data.image = image.src;
+            if (image_caption.length) {
+              data.image_caption = image_caption;
+            }
+          }
+          //send data to backend, and on successful login store user data as context and on local storage
 
           axios
-            .post("/list/create", { title, isPublic, author })
+            .put("/list/add/" + list_id, data)
             .then((res) => {
-              console.log("Created a list");
-
+              console.log("Added item to list");
               //navigate to app
-              navigate("/list/" + res.data.data._id);
+              navigate("/list/" + list_id);
             })
             .catch((err) => {
               setDisableSubmit(false);

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ListForm from "../../components/ListForm";
 import Toast from "../../components/Toast";
 import axios from "../../helpers/axios";
@@ -14,6 +14,8 @@ export default () => {
   const navigate = useNavigate();
 
   const userData = useContext(UserContext).userData;
+
+  const [list_id, list_title, list_isPublic] = useParams()._data.split("_");
 
   useEffect(() => {
     if (!userData || !userData.username || !userData._id || !userData.token) {
@@ -44,15 +46,13 @@ export default () => {
             formData.get("isPublic") != null &&
             formData.get("isPublic") === "on";
 
-          const author = userData._id;
-
           axios
-            .post("/list/create", { title, isPublic, author })
+            .patch("/list/edit/" + list_id, { title, isPublic })
             .then((res) => {
-              console.log("Created a list");
+              console.log("Edited list");
 
               //navigate to app
-              navigate("/list/" + res.data.data._id);
+              navigate("/list/" + list_id);
             })
             .catch((err) => {
               setDisableSubmit(false);
@@ -69,10 +69,12 @@ export default () => {
         validated={validated}
         setValidated={setValidated}
         validInputs={validInputs}
+        defaultTitle={list_title}
+        defaultIsPublic={list_isPublic === "true"}
       />
       {toastMessage.length ? (
         <Toast
-          title={"Oops! Couldn't create your list"}
+          title={"Oops! Couldn't edit your list"}
           message={toastMessage}
           setMessage={setToastMessage}
         />

@@ -4,7 +4,9 @@ const UserContext = createContext({});
 
 const UserContextProvider = (props) => {
   const [user, setUser] = useState({
-    userData: { username: null, _id: null, token: null },
+    userData: localStorage.user
+      ? JSON.parse(localStorage.user)
+      : { username: null, _id: null, token: null },
     setUserData: (newUserData) => {
       setUser({ ...user, userData: newUserData });
     },
