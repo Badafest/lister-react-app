@@ -22,7 +22,7 @@ const UserSchema = new Schema(
       required: [true, "can't be blank"],
       min: 8,
       match: [
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d~`!@#$%^&*()_+=-]{8,}$/,
         "must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number",
       ],
     },

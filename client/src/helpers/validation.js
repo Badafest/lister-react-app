@@ -5,7 +5,7 @@ export const validateUsername = (username) => {
 
 export const validatePassword = (password) => {
   const match = password.match(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d~`!@#$%^&*()_+=-]{8,}$/
   );
   return match ? true : false;
 };
