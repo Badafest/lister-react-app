@@ -80,7 +80,7 @@ export default (props) => {
                         .then((res) => {
                           console.log(res.data.data);
                           console.log("BEFORE =>", crossed);
-                          setCrossed(res.data.data.crossed === "true");
+                          setCrossed(res.data.data.crossed);
                           console.log("AFTER =>", crossed);
                         });
                     }}
