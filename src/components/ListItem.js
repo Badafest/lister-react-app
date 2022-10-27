@@ -79,10 +79,7 @@ export default (props) => {
                         )
                         .then((res) => {
                           console.log(res.data.data);
-                          setCrossed(
-                            res.data.data.crossed ||
-                              res.data.data.crossed === "true"
-                          );
+                          setCrossed(res.data.data.crossed === "true");
                           console.log(crossed);
                         });
                     }}
