@@ -78,7 +78,7 @@ export default (props) => {
                             !crossed
                         )
                         .then((res) => {
-                          console.log("Crossed item");
+                          console.log(res.data.data);
                           setCrossed(res.data.data.crossed);
                         });
                     }}
