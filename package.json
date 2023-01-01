@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -41,7 +41,7 @@
       "last 1 safari version"
     ]
   },
-  "main": "index.js",
+  "main": "/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Badafest/lister-react-app.git"
